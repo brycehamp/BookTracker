@@ -5,11 +5,19 @@ from library import Library
 
 # region Variables 
 library = Library()
-choice = 0
 # endregion 
 
 # region Execute
-while choice != 3:
+while True:
+    choice = input("What would you like to do? \n 1. Add book \n 2. View books \n 3. Search for a book \n 4. Exit \n Choice: ")
+    
+    while True:
+        try:
+            choice = int(choice)
+            break
+        except ValueError:
+            choice = input("Selection is not an integer. Please try again. Selection: ")
+
     match choice:
         case 1:
             title: str = input("Title: ")
@@ -27,19 +35,19 @@ while choice != 3:
 
             book = Book(title, author, genre, status, rating)
             library.add_book(book)
+            library.save_books()
 
         case 2:
-            for b in library.books:
-                print(b.title)
+            library.view_books()
 
-    choice = input("What would you like to do? \n 1. Add book \n 2. View books \n 3. Exit \n Choice: ")
+        case 3:
+            library.search_books(input("Enter search parameters: "))
 
-    while True:
-        try:
-            choice = int(choice)
+        case 4:
             break
-        except ValueError:
-            choice = input("Selection is not an integer. Please try again. Selection: ")
+
+        case _:
+            print("Invalid menu selection. Please try again.")
 
 # endregion
 

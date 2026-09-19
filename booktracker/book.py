@@ -5,3 +5,11 @@ class Book:
         self.genre = genre
         self.status = status
         self.rating = rating
+
+    def to_dict(self):
+        book = {"title": self.title, 
+                "author": self.author, 
+                "genre": self.genre,
+                "status": self.status,
+                "rating": self.rating}
+        return book
