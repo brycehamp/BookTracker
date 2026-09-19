@@ -1,16 +1,48 @@
+# region Imports
 from book import Book
 from library import Library
+# endregion
 
-book1 = Book("The Atlas Six", "Olivie Blake", "Dark Academia", "Read", 4.5)
-book2 = Book("Starside", "Alex Aster", "Romantasy", "Read", 3.5)
-book3 = Book("He Who Fights with Monsters 11", "Travis Deverell", "LitRPG", "Want to Read", 5)
-
-books: list[Book] = [book1, book2, book3]
-
+# region Variables 
 library = Library()
+choice = 0
+# endregion 
 
-for b in books:
-    library.add_book(b)
+# region Execute
+while choice != 3:
+    match choice:
+        case 1:
+            title: str = input("Title: ")
+            author: str = input("Author: ")
+            genre: str = input("Genre: ")
+            status: str = input("Status: ")
+            rating = input("Rating: ")
 
-for b in library.books:
-    print(b.title)
+            while True:
+                try:
+                    rating = float(rating)
+                    break
+                except ValueError:
+                    rating = input("Rating is not a number. Please try again. Rating: ")
+
+            book = Book(title, author, genre, status, rating)
+            library.add_book(book)
+
+        case 2:
+            for b in library.books:
+                print(b.title)
+
+    choice = input("What would you like to do? \n 1. Add book \n 2. View books \n 3. Exit \n Choice: ")
+
+    while True:
+        try:
+            choice = int(choice)
+            break
+        except ValueError:
+            choice = input("Selection is not an integer. Please try again. Selection: ")
+
+# endregion
+
+
+
+
