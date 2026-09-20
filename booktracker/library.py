@@ -5,7 +5,7 @@ class Library:
     def __init__(self):
         self.books = []
 
-    def add_book(self, book: Book):
+    def add_book(self, book):
         self.books.append(book)
 
     def view_books(self):
@@ -29,10 +29,25 @@ class Library:
                 print(b.title)
 
     def save_books(self):
-        list_of_books = [] # a list of all the books with all their attributes
+        list_of_books = []
 
         for b in self.books:
             list_of_books.append(b.to_dict())
 
         with open("booktracker/books.json", "w") as file:
             json.dump(list_of_books, file, indent=4)
+
+    def load_books(self):
+        try:
+            with open("booktracker/books.json", "r") as file:
+                library_books_data = json.load(file)
+
+                for book_data in library_books_data:
+                    book = Book(book_data["title"], 
+                                book_data["author"], 
+                                book_data["genre"], 
+                                book_data["status"], 
+                                book_data["rating"])
+                    self.add_book(book)
+        except FileNotFoundError:
+            self.save_books()
