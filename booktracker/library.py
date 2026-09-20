@@ -51,3 +51,36 @@ class Library:
                     self.add_book(book)
         except FileNotFoundError:
             self.save_books()
+
+    def update_book(self, title):
+        for book in self.books:
+            if book.title.lower() == title.lower(): 
+                print("Book: " + book.title)
+                print("Current Status: " + book.status)
+                print("Current Rating: " + str(book.rating) + "\n")
+
+                book.status = input("New Status: ")
+                rating = input("New Rating: ")
+
+                while True:
+                    try:
+                        rating = float(rating)
+                        break
+                    except ValueError:
+                        rating = input("Rating is not a number. Please try again. Rating: ")
+
+                book.rating = rating
+                return
+
+        print("There are no books in the library with that title.")
+
+    def delete_book(self, title):
+        for book in self.books:
+            if book.title.lower() == title.lower():
+                self.books.remove(book)
+                print(f"\"{book.title}\" has been removed from the library.")
+                return
+
+        print("There are no books in the library with that title.")
+
+

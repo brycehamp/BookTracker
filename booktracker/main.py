@@ -14,7 +14,7 @@ library = Library()
 library.load_books()
 
 while True:
-    choice = input("What would you like to do? \n 1. Add book \n 2. View books \n 3. Search for a book \n 4. Exit \n Choice: ")
+    choice = input("What would you like to do? \n 1. Add book \n 2. View books \n 3. Search for a book \n 4. Update a book \n 5. Remove a book \n 6. Exit \n Choice: ")
     
     while True:
         try:
@@ -36,6 +36,14 @@ while True:
             library.search_books(input("Enter search parameters: "))
 
         case 4:
+            library.update_book(input("Enter the title of the book you would like to update: "))
+            library.save_books()
+
+        case 5:
+            library.delete_book(input("Enter the title of the book you would like to delete: "))
+            library.save_books()
+
+        case 6:
             break
 
         case _:
