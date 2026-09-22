@@ -20,16 +20,39 @@ class Book:
         title: str = input("Title: ")
         author: str = input("Author: ")
         genre: str = input("Genre: ")
-        status: str = input("Status: ")
-        rating = input("Rating: ")
-
-        while True:
-            try:
-                rating = float(rating)
-                break
-            except ValueError:
-                rating = input("Rating is not a number. Please try again. Rating: ")
+        status: str = Book.validate_status(input("Status: "))
+        rating = Book.validate_rating(input("Rating: "))
 
         book = Book(title, author, genre, status, rating)
 
         return book
+
+    @staticmethod
+    def validate_rating(rating):
+        while True:
+            try:
+                rating = float(rating)
+                if not 0.0 <= rating <= 5.0:
+                    rating = input("Rating is not between 0 and 5. Please Try again. Rating: ")
+                else:
+                    break
+            except ValueError:
+                rating = input("Rating is not a number. Please try again. Rating: ")
+
+            
+
+        return rating
+
+    @staticmethod
+    def validate_status(status: str):
+        status_options = ["want to read", "read", "reading"]
+
+        while True:
+            if status.lower() in status_options:
+                break
+            else:
+                status = input("You have entered an invalid status. Please choose \"Want to Read\", \"Read\", or \"Reading.\" Status: ")
+
+        status = status.capitalize()
+        return status
+        

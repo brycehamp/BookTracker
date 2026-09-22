@@ -1,5 +1,5 @@
 import json
-from book import Book 
+from book import Book
 
 class Library:
     def __init__(self):
@@ -58,17 +58,12 @@ class Library:
                 print("Book: " + book.title)
                 print("Current Status: " + book.status)
                 print("Current Rating: " + str(book.rating) + "\n")
+ 
+                status = Book.validate_status(input("New Status: "))
 
-                book.status = input("New Status: ")
-                rating = input("New Rating: ")
+                rating = Book.validate_rating(input("New Rating: "))
 
-                while True:
-                    try:
-                        rating = float(rating)
-                        break
-                    except ValueError:
-                        rating = input("Rating is not a number. Please try again. Rating: ")
-
+                book.status = status
                 book.rating = rating
                 return
 
