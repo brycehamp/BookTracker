@@ -1,2 +1,3 @@
 __pycache__/
 booktracker/books.json
+booktracker/books.db
