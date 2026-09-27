@@ -1,16 +1,18 @@
 # region Imports
 from book import Book
 from library import Library
+from database import Database
 # endregion
 
 # region Variables 
-library = Library()
+database = Database("booktracker/books.db")
+library = Library(database)
 # endregion 
 
 # region Execute
 
-# library books need to be loaded from json file before any input.
-# having this at the beginning also prevents issues with saving new books to the json file later.
+# database must be initialized and books must be loaded before any input.
+database.initialize_database()
 library.load_books()
 
 while True:
@@ -27,7 +29,6 @@ while True:
         case 1:
             book = Book.create_book()
             library.add_book(book)
-            library.save_books()
 
         case 2:
             library.view_books()
@@ -37,11 +38,10 @@ while True:
 
         case 4:
             library.update_book(input("Enter the title of the book you would like to update: "))
-            library.save_books()
 
         case 5:
-            library.delete_book(input("Enter the title of the book you would like to delete: "))
-            library.save_books()
+            library.delete_book(input("Enter the title of the book you would like to delete: "), 
+                                input("Enter the author of the book you would like to delete: "))
 
         case 6:
             break

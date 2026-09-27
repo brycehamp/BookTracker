@@ -1,12 +1,13 @@
 class Book:
-    def __init__(self, title: str, author: str, genre: str, status: str, rating: float):
+    def __init__(self, title: str, author: str, genre: str, status: str, rating: float, id = None):
         self.title = title
         self.author = author
         self.genre = genre
         self.status = status
         self.rating = rating
+        self.id = id
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         book = {"title": self.title, 
                 "author": self.author, 
                 "genre": self.genre,
@@ -16,19 +17,19 @@ class Book:
         return book
 
     @staticmethod
-    def create_book():
+    def create_book() -> Book:
         title: str = input("Title: ")
         author: str = input("Author: ")
         genre: str = input("Genre: ")
         status: str = Book.validate_status(input("Status: "))
         rating = Book.validate_rating(input("Rating: "))
 
-        book = Book(title, author, genre, status, rating)
+        book = Book(title.title(), author.title(), genre.capitalize(), status.capitalize(), rating)
 
         return book
 
     @staticmethod
-    def validate_rating(rating):
+    def validate_rating(rating) -> float:
         while True:
             try:
                 rating = float(rating)
@@ -39,12 +40,10 @@ class Book:
             except ValueError:
                 rating = input("Rating is not a number. Please try again. Rating: ")
 
-            
-
         return rating
 
     @staticmethod
-    def validate_status(status: str):
+    def validate_status(status: str) -> str:
         status_options = ["want to read", "read", "reading"]
 
         while True:
