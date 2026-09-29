@@ -1,4 +1,3 @@
-import json
 from book import Book
 from database import Database
 
@@ -43,19 +42,23 @@ class Library:
                 print("Book: " + book.title)
                 print("Current Status: " + book.status)
                 print("Current Rating: " + str(book.rating) + "\n")
+
+                id: int | None = book.id
+
+                if id is None:
+                    raise ValueError("ID cannot be None when updating book.") 
  
                 status = Book.validate_status(input("New Status: "))
-
                 rating = Book.validate_rating(input("New Rating: "))
 
-                book.status = status
-                book.rating = rating
+                self.database.update_book(id, status, rating)
+                self.load_books()
                 return
 
         print("There are no books in the library with that title.")
 
     def delete_book(self, title: str, author: str):
-        deleted_book: list[tuple] = self.database.delete_book(title.lower(), author.lower())
+        deleted_book: list[tuple] = self.database.delete_book(title.title(), author.title())
 
         if len(deleted_book) == 1:
             print(f"\"{deleted_book[0][0]}\" by {deleted_book[0][1]} has been removed from the library.")

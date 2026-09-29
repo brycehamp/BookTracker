@@ -26,16 +26,32 @@ class Database:
         connection.commit()
         connection.close()
 
-    def insert_book(self,book: Book):
+    def insert_book(self, book: Book):
         connection = sqlite3.connect(self.database_path)
         
         cursor = connection.cursor()
 
         cursor.execute("""
             INSERT INTO books (title, author, genre, status, rating)
-            VALUES (?,?,?,?,?,?)
+            VALUES (?,?,?,?,?)
             """,
-            (book.title, book.author, book.genre, book.status, book.rating, book.id)
+            (book.title, book.author, book.genre, book.status, book.rating)
+            )
+
+        connection.commit()
+        connection.close()
+
+    def update_book(self, id: int, new_status: str, new_rating: float):
+        connection = sqlite3.connect(self.database_path)
+        
+        cursor = connection.cursor() 
+
+        cursor.execute("""
+            UPDATE books
+            SET status = ?, rating = ?
+            WHERE id = ?
+            """,
+            (new_status, new_rating, id)
             )
 
         connection.commit()
